@@ -3,7 +3,9 @@
 
 set -e
 
-if [[ "${VSCODE_QUALITY}" == "insider" ]]; then
+if [[ "${APP_NAME}" == "MCADE" ]]; then
+  cp -rp src/mcade-stable/* vscode/
+elif [[ "${VSCODE_QUALITY}" == "insider" ]]; then
   cp -rp src/insider/* vscode/
 else
   cp -rp src/stable/* vscode/
@@ -125,7 +127,11 @@ fi
 
 setpath_json "product" "tunnelApplicationConfig" '{}'
 
-jsonTmp=$( jq -s '.[0] * .[1]' product.json ../product.json )
+if [[ "${APP_NAME}" == "MCADE" ]]; then
+  jsonTmp=$( jq -s '.[0] * .[1]' product.json ../product-mcade.json )
+else
+  jsonTmp=$( jq -s '.[0] * .[1]' product.json ../product.json )
+fi
 echo "${jsonTmp}" > product.json && unset jsonTmp
 
 cat product.json
@@ -239,7 +245,10 @@ replace 's|Microsoft Corporation|VSCodium|' package.json
 
 cp resources/server/manifest.json{,.bak}
 
-if [[ "${VSCODE_QUALITY}" == "insider" ]]; then
+if [[ "${APP_NAME}" == "MCADE" ]]; then
+  setpath "resources/server/manifest" "name" "MCADE"
+  setpath "resources/server/manifest" "short_name" "MCADE"
+elif [[ "${VSCODE_QUALITY}" == "insider" ]]; then
   setpath "resources/server/manifest" "name" "VSCodium - Insiders"
   setpath "resources/server/manifest" "short_name" "VSCodium - Insiders"
 else
@@ -252,8 +261,13 @@ replace "s|\\[\\/\\* BUILTIN_ANNOUNCEMENTS \\*\\/\\]|$( tr -d '\n' < ../announce
 
 ../undo_telemetry.sh
 
-replace 's|Microsoft Corporation|VSCodium|' build/lib/electron.ts
-replace 's|([0-9]) Microsoft|\1 VSCodium|' build/lib/electron.ts
+if [[ "${APP_NAME}" == "MCADE" ]]; then
+  replace 's|Microsoft Corporation|MCADE Team|' build/lib/electron.ts
+  replace 's|([0-9]) Microsoft|\1 MCADE|' build/lib/electron.ts
+else
+  replace 's|Microsoft Corporation|VSCodium|' build/lib/electron.ts
+  replace 's|([0-9]) Microsoft|\1 VSCodium|' build/lib/electron.ts
+fi
 
 if [[ "${OS_NAME}" == "linux" ]]; then
   # microsoft adds their apt repo to sources
