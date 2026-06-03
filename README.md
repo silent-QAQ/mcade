@@ -1,216 +1,416 @@
-<div id="vscodium-logo" align="center">
-    <br />
-    <img src="./icons/stable/codium_cnl.svg" alt="VSCodium Logo" width="200"/>
-    <h1>VSCodium</h1>
-    <h3>Free/Libre Open Source Software Binaries of Visual Studio Code</h3>
-</div>
+# MCADE
 
-<div id="badges" align="center">
+<p align="center">
+  <img src="icons/mcade-logo.png" width="128" height="128" alt="MCADE Logo">
+</p>
 
-[![current release](https://img.shields.io/github/release/vscodium/vscodium.svg)](https://github.com/vscodium/vscodium/releases)
-[![license](https://img.shields.io/github/license/VSCodium/vscodium.svg)](https://github.com/VSCodium/vscodium/blob/master/LICENSE)
-[![Gitter](https://img.shields.io/gitter/room/vscodium/vscodium.svg)](https://gitter.im/VSCodium/Lobby)
-[![codium](https://snapcraft.io//codium/badge.svg)](https://snapcraft.io/codium)
-[![codium](https://snapcraft.io//codium/trending.svg?name=0)](https://snapcraft.io/codium)
+<h3 align="center">Minecraft Community AI Development Environment</h3>
+<p align="center">面向 Minecraft 社区开发者的 AI 集成开发环境 —— 基于 VSCodium 深度定制</p>
 
-</div>
+<p align="center">
+  <strong>开箱即用 · AI 驱动 · 专注 Minecraft 开发</strong>
+</p>
 
-**This is not a fork. This is a repository of scripts to automatically build [Microsoft's `vscode` repository](https://github.com/microsoft/vscode) into freely-licensed binaries with a community-driven default configuration.**
+---
 
-## Table of Contents
+## 目录
 
-- [Download/Install](#download-install)
-  - [Install with Brew](#install-with-brew)
-  - [Install with Windows Package Manager (WinGet)](#install-with-winget)
-  - [Install with Chocolatey](#install-with-choco)
-  - [Install with Scoop](#install-with-scoop)
-  - [Install with snap](#install-with-snap)
-  - [Install with Package Manager](#install-with-package-manager)
-  - [Install on Arch Linux](#install-on-arch-linux)
-  - [Flatpak Option](#flatpak)
-- [Build](#build)
-- [Why Does This Exist](#why)
-- [More Info](#more-info)
-- [Supported Platforms](#supported-platforms)
+- [项目简介](#项目简介)
+- [核心特性](#核心特性)
+- [目标用户](#目标用户)
+- [项目架构](#项目架构)
+- [项目结构](#项目结构)
+- [构建指南](#构建指南)
+  - [环境要求](#环境要求)
+  - [本地构建](#本地构建)
+  - [GitHub Actions 云端构建](#github-actions-云端构建)
+  - [环境变量说明](#环境变量说明)
+- [品牌定制指南](#品牌定制指南)
+- [开发路线图](#开发路线图)
+- [参与贡献](#参与贡献)
+- [许可证](#许可证)
+- [致谢](#致谢)
 
-## <a id="download-install"></a>Download/Install
+---
 
-:tada: :tada:
-Download latest release here:
-[stable](https://github.com/VSCodium/vscodium/releases) or
-[insiders](https://github.com/VSCodium/vscodium-insiders/releases)
-:tada: :tada:
+## 项目简介
 
-[More info / helpful tips are here.](https://github.com/VSCodium/vscodium/blob/master/docs/index.md)
+**MCADE**（Minecraft AI Development Environment）是一款面向 Minecraft 社区开发者的 AI 集成开发环境。基于 VSCodium 深度定制，内置 AI 编程助手、Mod/插件开发工具链、服务器管理工具和本地测试启动器，致力于打造「开箱即用」的 Minecraft 开发体验。
 
+> **核心理念：** VSCodium 提供成熟的 IDE 底座，Continue.dev 提供 AI 能力，自研扩展集合提供 MC 开发工具链，开源启动器提供本地测试能力。
 
-#### <a id="install-with-brew"></a>Install with Brew (Mac)
+### 与竞品的差异
 
-If you are on a Mac and have [Homebrew](https://brew.sh/) installed:
+| 对比项 | MCADE | MCreator | IntelliJ + MinecraftDev | VS Code 自行配置 |
+|--------|-------|----------|------------------------|-----------------|
+| 定位 | 专业开发者 IDE | 可视化编程工具 | 通用 Java IDE | 通用编辑器 |
+| AI 集成 | 深度内置 | 无 | 需额外配置 | 需手动安装 |
+| MC 工具链 | 开箱即用 | 内置 | 需安装插件 | 需手动配置 |
+| 服务器管理 | 内置面板 | 无 | 无 | 需手动 |
+| 本地测试 | 内置启动器 | 内置 | 无 | 需手动 |
+| 扩展兼容 | 兼容 VS Code 生态 | 封闭生态 | 兼容 IntelliJ 生态 | 兼容 VS Code 生态 |
+| 许可证 | MIT 开源 | 专有软件 | 商业授权 | MIT 开源 |
+
+---
+
+## 核心特性
+
+### AI 助手
+- 内置 [Continue.dev](https://github.com/continuedev/continue) 开源 AI 编程助手
+- 预配置 DeepSeek API / Ollama 本地模型
+- Minecraft 领域专用的 Chat 参与者（内置 Forge/Fabric/Paper API 知识）
+- 智能代码补全、解释、重构
+
+### Mod/插件开发工具
+- **项目脚手架：** 一键创建 Forge / Fabric / NeoForge / Paper 项目
+- **代码片段库：** 涵盖 Forge、Fabric、Paper、Bukkit 等平台的常用代码片段
+- **Gradle 深度集成：** 可视化 Task 管理，一键 Build → 输出 JAR
+- **资源文件编辑器：** JSON 可视化编辑（Recipe、Loot Table、Advancement 等）
+- **调试器配置：** 一键配置 Java Debug + Minecraft 专用调试
+
+### 服务器管理
+- 侧边栏服务器管理面板
+- 创建/启停/重启本地 Minecraft 服务器
+- 支持 Vanilla / Forge / Fabric / Paper / Spigot 等服务端
+- 实时控制台（WebSocket 连接 stdin/stdout）
+- 服务器配置在线编辑
+- 自动备份
+
+### 本地 MC 启动器
+- 集成 Prism Launcher CLI，一键启动测试实例
+- 快速启动、自动连接调试器
+- 长期目标：自研轻量测试启动器
+
+---
+
+## 目标用户
+
+- **Minecraft Java Edition Mod 开发者**（Forge / Fabric / NeoForge / Quilt）
+- **Minecraft 服务器插件开发者**（Paper / Spigot / Bukkit / BungeeCord / Velocity）
+- **Bedrock Edition Addon 开发者**（行为包 / 资源包 / 脚本）
+- **数据包（Datapack）开发者**
+- **服务器运维人员**
+
+---
+
+## 项目架构
+
+```
+┌──────────────────────────────────────────────────┐
+│                    MCADE IDE                       │
+│  ┌──────────────────────────────────────────────┐ │
+│  │         VSCodium Core (Electron)             │ │
+│  │  ┌─────────┐ ┌─────────┐ ┌───────────────┐  │ │
+│  │  │ AI 助手  │ │ MC 开发  │ │ 服务器管理    │  │ │
+│  │  │(Continue │ │ 工具集   │ │ 面板          │  │ │
+│  │  │ + 定制)  │ │         │ │               │  │ │
+│  │  └─────────┘ └─────────┘ └───────────────┘  │ │
+│  └──────────────────────────────────────────────┘ │
+│                       │                           │
+│         ┌─────────────┼─────────────┐             │
+│         ▼             ▼             ▼             │
+│  ┌──────────┐ ┌──────────┐ ┌──────────┐         │
+│  │ 本地 LLM  │ │ Gradle/  │ │ MC 启动器 │         │
+│  │ (Ollama) │ │ Maven    │ │ (Prism/  │         │
+│  │          │ │          │ │  自研)   │         │
+│  └──────────┘ └──────────┘ └──────────┘         │
+│                       │                           │
+│         ┌─────────────┼─────────────┐             │
+│         ▼             ▼             ▼             │
+│  ┌──────────┐ ┌──────────┐ ┌──────────┐         │
+│  │ Java 运行 │ │ MC 服务器 │ │ MC 客户端 │         │
+│  │ 时       │ │ 实例     │ │ 实例     │         │
+│  └──────────┘ └──────────┘ └──────────┘         │
+└──────────────────────────────────────────────────┘
+```
+
+### 技术栈
+
+| 层级 | 技术 | 说明 |
+|------|------|------|
+| 基础框架 | VSCodium (Electron + TypeScript) | IDE 主体 |
+| AI 引擎 | Continue.dev (TypeScript) | AI 助手核心 |
+| AI 模型 | DeepSeek / Ollama 本地模型 | 默认模型配置 |
+| 扩展开发 | TypeScript + VS Code Extension API | 自定义扩展 |
+| 构建工具 | Gradle / Maven 集成 | MC 项目构建 |
+| 启动器 | Prism Launcher CLI / 自研 Rust+Tauri | 本地测试启动 |
+| 服务器管理 | Node.js 子进程 + WebSocket | 服务端控制 |
+| 打包分发 | Electron Builder | 跨平台打包 |
+
+---
+
+## 项目结构
+
+```
+mcade/
+├── icons/                        # MCADE 图标资源
+│   ├── mcade-logo.png            # MCADE Logo（您的图标）
+│   ├── stable/                   # 稳定版 SVG 图标
+│   ├── insider/                  # 预览版 SVG 图标
+│   └── build_icons.sh            # 图标生成脚本
+│
+├── src/                          # 平台资源文件
+│   ├── mcade-stable/             # MCADE 稳定版资源（品牌定制）
+│   │   ├── resources/
+│   │   │   ├── darwin/           # macOS 图标 (.icns)
+│   │   │   ├── linux/            # Linux 桌面文件、图标
+│   │   │   ├── server/           # Web 服务图标
+│   │   │   └── win32/            # Windows 图标 (.ico, .bmp)
+│   │   └── src/vs/workbench/     # 内置图标和欢迎页资源
+│   ├── mcade-insider/            # MCADE 预览版资源
+│   ├── stable/                   # VSCodium 稳定版资源（原始）
+│   └── insider/                  # VSCodium 预览版资源（原始）
+│
+├── patches/                      # VSCodium 补丁
+│   └── user/                     # 用户自定义补丁
+│
+├── build/                        # 构建脚本和安装包配置
+│   └── windows/                  # Windows MSI 安装包配置
+│
+├── dev/                          # 开发构建环境
+│   ├── build.sh                  # 构建入口脚本
+│   └── build.env                 # 构建环境变量
+│
+├── .github/workflows/            # GitHub Actions CI/CD
+│   ├── ci-build-*.yml            # CI 构建工作流（linux/macos/windows）
+│   └── publish-*.yml             # 发布工作流
+│
+├── product-mcade.json            # MCADE 产品配置
+├── prepare_vscode.sh             # 构建准备脚本（已修改支持 MCADE）
+├── undo_telemetry.sh             # 遥测禁用脚本
+└── utils.sh                      # 工具函数
+```
+
+---
+
+## 构建指南
+
+### 环境要求
+
+| 工具 | 版本 | 说明 |
+|------|------|------|
+| Git | 任意 | 用于拉取子模块 |
+| Node.js | >= 22.x | JavaScript 运行时 |
+| npm | >= 10.x | 包管理器 |
+| Python | 3.x | 构建依赖 |
+| jq | 任意 | JSON 处理工具 |
+| Visual Studio | 2022 | Windows 构建需要 MSVC 编译器 |
+
+### 本地构建
+
+> **注意：本地构建非常耗时（30-60分钟），建议使用 GitHub Actions 云端构建。**
+
 ```bash
-# stable
-brew install --cask vscodium
+# 1. 克隆仓库（含子模块）
+git clone https://github.com/silent-QAQ/mcade.git
+cd mcade
+git submodule update --init --recursive
 
-# insiders
-brew install --cask vscodium@insiders
+# 2. 进入 vscodium 目录
+cd vscodium
+
+# 3. 设置环境变量（可选，使用 VSCodium 默认版时跳过）
+export APP_NAME="MCADE"
+export VSCODE_QUALITY="stable"  # 或 "insider"
+
+# 4. 执行构建
+bash ./dev/build.sh
 ```
 
-#### <a id="install-with-winget"></a>Install with Windows Package Manager (WinGet)
+**Windows 本地构建参考：**
 
-If you use Windows and have [Windows Package Manager](https://github.com/microsoft/winget-cli) installed:
-```cmd
-:: stable
-winget install -e --id VSCodium.VSCodium
+```powershell
+# 在 PowerShell 中设置环境变量
+$env:APP_NAME = "MCADE"
+$env:VSCODE_QUALITY = "stable"
 
-:: insider
-winget install -e --id VSCodium.VSCodium.Insiders
+# 通过 Git Bash 执行构建
+& "C:\Program Files\Git\bin\bash.exe" ./dev/build.sh
 ```
 
-#### <a id="install-with-choco"></a>Install with Chocolatey (Windows)
+### GitHub Actions 云端构建
 
-If you use Windows and have [Chocolatey](https://chocolatey.org) installed (thanks to [@Thilas](https://github.com/Thilas)):
-```cmd
-:: stable
-choco install vscodium
+此仓库已预配置完整的 GitHub Actions CI/CD 工作流，推荐使用云端构建：
 
-:: insider
-choco install vscodium-insiders
-```
-
-#### <a id="install-with-scoop"></a>Install with Scoop (Windows)
-
-If you use Windows and have [Scoop](https://scoop.sh) installed:
-```bash
-scoop bucket add extras
-scoop install vscodium
-```
-
-#### <a id="install-with-snap"></a>Install with snap (GNU/Linux)
-
-VSCodium is available in the [Snap Store](https://snapcraft.io/) as [Codium](https://snapcraft.io/codium), thanks to the help of the [Snapcrafters](https://github.com/snapcrafters/codium) community.
-If your GNU/Linux distribution has support for [snaps](https://snapcraft.io/docs/installing-snapd):
+1. **推送代码到 GitHub 仓库**
 
 ```bash
-snap install codium --classic
+git push origin master
 ```
 
-#### <a id="install-with-package-manager"></a>Install with Package Manager (GNU/Linux)
+2. **在 GitHub 仓库页面触发构建**
+   - 进入 `Actions` 选项卡
+   - 选择 `CI Build (Windows/Linux/macOS)`
+   - 点击 `Run workflow`
+   - 输入环境变量：
+     - `APP_NAME`: `MCADE`（构建 MCADE 版本）
+     - `VSCODE_QUALITY`: `stable` 或 `insider`
+   - 点击 `Run workflow` 确认
 
-You can always install using the downloads (deb, rpm, tar) on the releases page for [stable](https://github.com/VSCodium/vscodium/releases) or [insiders](https://github.com/VSCodium/vscodium-insiders/releases), but you can also install using your favorite package manager and get automatic updates.
+3. **等待构建完成**
+   - 构建通常需要 30-60 分钟
+   - 完成后在对应 workflow run 的 Artifacts 或 Release 中下载安装包
 
-[@paulcarroty](https://github.com/paulcarroty) has set up a repository with instructions for `apt`, `dnf` and `zypper` [here](https://gitlab.com/paulcarroty/vscodium-deb-rpm-repo).
+### 发布的触发方式
 
-Any issues installing VSCodium using your package manager should be directed to that repository's issue tracker.
+| 触发方式 | 说明 |
+|---------|------|
+| `workflow_dispatch` | 手动触发（推荐） |
+| tag 推送 | 自动触发发布流程（`git tag v1.0.0` 并推送） |
+| 定时构建 | 配置 cron 定时触发（可选） |
 
-#### <a id="install-on-arch-linux"></a>Install on Arch Linux
+### 环境变量说明
 
-VSCodium is available in [AUR](https://wiki.archlinux.org/index.php/Arch_User_Repository), maintained by [@binex-dsk](https://github.com/binex-dsk) as package [vscodium-bin](https://aur.archlinux.org/packages/vscodium-bin/) (stable) and as [vscodium-insiders-bin](https://aur.archlinux.org/packages/vscodium-insiders-bin).
+| 变量 | 可选值 | 说明 |
+|------|--------|------|
+| `APP_NAME` | `MCADE` / `VSCodium` | 构建的品牌版本 |
+| `VSCODE_QUALITY` | `stable` / `insider` | 稳定版或预览版 |
+| `SHOULD_BUILD` | `yes` / `no` | 是否执行构建 |
+| `SKIP_SOURCE` | `yes` / `no` | 是否跳过源码拉取 |
+| `SKIP_ASSETS` | `yes` / `no` | 是否跳过资源打包 |
+| `SKIP_BUILD` | `yes` / `no` | 是否跳过编译阶段 |
+| `DISABLE_UPDATE` | `yes` / `no` | 是否禁用自动更新 |
+| `CI_BUILD` | `yes` / `no` | 是否为 CI 环境构建 |
+| `OS_NAME` | `osx` / `linux` / `windows` | 目标操作系统 |
 
-If you want to save disk space by having VSCodium use the Electron system-wide, you also have [vscodium-electron](https://aur.archlinux.org/packages/vscodium-electron),
-maintained by [@m00nw4tch3r](https://aur.archlinux.org/account/m00nw4tch3r).
+---
 
-An alternative package [vscodium-git](https://aur.archlinux.org/packages/vscodium-git/), maintained by [@cedricroijakkers](https://github.com/cedricroijakkers), is also available should you wish to compile from source yourself.
+## 品牌定制指南
 
-#### <a id="flatpak"></a>Flatpak Option (GNU/Linux)
+### 已完成的品牌修改
 
-VSCodium is available as a Flatpak app [here](https://flathub.org/apps/details/com.vscodium.codium) and the build repo is [here](https://github.com/flathub/com.vscodium.codium).
-If your distribution has support for [flatpak](https://flathub.org), and you have enabled the [flathub repo](https://flatpak.org/setup/):
+- [x] **产品标识：** `product-mcade.json` 定义了 MCADE 的名称、图标名、协议、GUID 等
+- [x] **构建脚本：** `prepare_vscode.sh` 支持 `APP_NAME=MCADE` 模式
+- [x] **资源目录：** 创建了 `src/mcade-stable/` 和 `src/mcade-insider/` 资源目录
+- [x] **Logo：** 已添加到 `icons/mcade-logo.png`
+
+### 自定义 product.json
+
+编辑 `product-mcade.json` 可自定义：
+
+```json
+{
+  "nameShort": "MCADE",
+  "nameLong": "Minecraft Community AI Development Environment",
+  "applicationName": "mcade",
+  "win32DirName": "MCADE",
+  "win32AppUserModelId": "MCADE.MCADE",
+  "darwinBundleIdentifier": "com.mcade.MCADE",
+  "extensionsGallery": {
+    "serviceUrl": "https://open-vsx.org/vscode/gallery"
+  }
+}
+```
+
+### 替换图标
+
+1. 将图标 PNG 文件放到 `icons/mcade-logo.png`
+2. 运行图标生成脚本生成各平台格式：
 
 ```bash
-flatpak install flathub com.vscodium.codium
-flatpak run com.vscodium.codium
+# 需要安装 ImageMagick、icns2png、icotool 等工具
+bash icons/build_icons.sh
 ```
 
-## <a id="build"></a>Build
+3. 或通过 GitHub Actions 自动处理图标转换
 
-Build instructions can be found [here](https://github.com/VSCodium/vscodium/blob/master/docs/howto-build.md)
+### 添加自定义补丁
 
-## <a id="why"></a>Why Does This Exist
+在 `patches/user/` 目录添加 `.patch` 文件：
 
-This repository contains build files to generate free release binaries of Microsoft's Visual Studio Code. When we speak of "free software", we're talking about freedom, not price.
+```bash
+# 在 vscode 目录生成补丁
+cd vscode
+git diff --relative > ../patches/user/my-customization.patch
+```
 
-Microsoft's releases of Visual Studio Code are licensed under [this not-FLOSS license](https://code.visualstudio.com/license) and contain telemetry/tracking. According to [this comment](https://github.com/Microsoft/vscode/issues/60#issuecomment-161792005) from a Visual Studio Code maintainer:
+补丁会在构建时自动应用。
 
-> When we [Microsoft] build Visual Studio Code, we do exactly this. We clone the vscode repository, we lay down a customized product.json that has Microsoft specific functionality (telemetry, gallery, logo, etc.), and then produce a build that we release under our license.
->
-> When you clone and build from the vscode repo, none of these endpoints are configured in the default product.json. Therefore, you generate a "clean" build, without the Microsoft customizations, which is by default licensed under the MIT license
+---
 
-This repo exists so that you don't have to download+build from source. The build scripts in this repo clone Microsoft's vscode repo, run the build commands, and upload the resulting binaries to [GitHub releases](https://github.com/VSCodium/vscodium/releases). __These binaries are licensed under the MIT license. Telemetry is disabled.__
+## 开发路线图
 
-If you want to build from source yourself, head over to [Microsoft's vscode repo](https://github.com/Microsoft/vscode) and follow their [instructions](https://github.com/Microsoft/vscode/wiki/How-to-Contribute#build-and-run). This repo exists to make it easier to get the latest version of MIT-licensed Visual Studio Code.
+### 第一阶段：MVP（进行中）
 
-Microsoft's build process (which we are running to build the binaries) does download additional files. Those packages downloaded during build are:
+| 任务 | 状态 | 说明 |
+|------|------|------|
+| 1.1 Fork VSCodium，品牌定制 | ✅ 已完成 | 修改品牌、图标、应用名 |
+| 1.2 预置 Continue 扩展 | ⏳ 待开始 | 内置 AI 助手 |
+| 1.3 MC 项目脚手架 | ⏳ 待开始 | 一键创建项目模板 |
+| 1.4 代码片段库 | ⏳ 待开始 | MC 开发 Snippets |
+| 1.5 Gradle 集成 | ⏳ 待开始 | 构建可视化 |
+| 1.6 构建流水线 | ⏳ 待开始 | 一键 Build → JAR |
+| 1.7 打包与自动更新 | ⏳ 待开始 | 跨平台安装包 |
 
-- Pre-built extensions from the GitHub:
-  - [ms-vscode.js-debug-companion](https://github.com/microsoft/vscode-js-debug-companion)
-  - [ms-vscode.js-debug](https://github.com/microsoft/vscode-js-debug)
-  - [ms-vscode.vscode-js-profile-table](https://github.com/microsoft/vscode-js-profile-visualizer)
-- From [Electron releases](https://github.com/electron/electron/releases) (using [gulp-atom-electron](https://github.com/joaomoreno/gulp-atom-electron))
-  - electron
-  - ffmpeg
+### 第二阶段：核心功能
 
-## <a id="more-info"></a>More Info
+| 任务 | 说明 |
+|------|------|
+| 2.1 MC 专用 AI Chat 参与者 | 内置 MC 开发知识库 |
+| 2.2 本地 LLM 集成 | 一键安装 Ollama |
+| 2.3 服务器管理面板 | 侧边栏管理 MC 服务器 |
+| 2.4 实时控制台 | WebSocket 连接 |
+| 2.5 启动器集成 | 集成 Prism Launcher |
+| 2.6 资源文件编辑器 | JSON 可视化编辑 |
+| 2.7 调试器配置 | 一键 Java Debug |
 
-### Documentation
+### 第三阶段：高级功能
 
-For more information on getting all the telemetry disabled, tips for migrating from Visual Studio Code to VSCodium and more, have a look at [the Docs page](https://github.com/VSCodium/vscodium/blob/master/docs/index.md) page.
+| 任务 | 说明 |
+|------|------|
+| 3.1 自研轻量启动器 | 专为测试优化 |
+| 3.2 可视化资源编辑器 | 纹理/模型预览 |
+| 3.3 Mod 发布助手 | 一键发布到 CurseForge/Modrinth |
+| 3.4 团队协作 | Git 深度集成 |
+| 3.5 插件市场 | 第三方扩展/模板 |
+| 3.6 多语言支持 | 中、英、日、韩等 |
 
-### Troubleshooting
+---
 
-If you have any issue, please check [the Troubleshooting page](https://github.com/VSCodium/vscodium/blob/master/docs/troubleshooting.md) or the existing issues.
+## 参与贡献
 
-### Extensions and the Marketplace
+我们欢迎各种形式的贡献！无论是报告 Bug、提交功能建议、改进文档，还是提交代码。
 
-According to the Visual Studio Marketplace [Terms of Use](https://aka.ms/vsmarketplace-ToU), _you may only install and use Marketplace Offerings with Visual Studio Products and Services._ For this reason, VSCodium uses [open-vsx.org](https://open-vsx.org/), an open source registry for Visual Studio Code extensions. See the [Extensions + Marketplace](https://github.com/VSCodium/vscodium/blob/master/docs/index.md#extensions-marketplace) section on the Docs page for more details.
+### 如何开始
 
-Please note that some Visual Studio Code extensions have licenses that restrict their use to the official Visual Studio Code builds and therefore do not work with VSCodium. See [this note](https://github.com/VSCodium/vscodium/blob/master/docs/extensions.md#proprietary-debugging-tools) on the Docs page for what's been found so far and possible workarounds.
+1. Fork 本仓库
+2. 创建特性分支：`git checkout -b feature/my-feature`
+3. 提交修改：`git commit -am 'Add my feature'`
+4. 推送分支：`git push origin feature/my-feature`
+5. 提交 Pull Request
 
-### How are the VSCodium binaries built?
+### 开发规范
 
-If you would like to see the commands we run to build `vscode` into VSCodium binaries, have a look at the workflow files in `.github/workflows` for Windows, GNU/Linux and macOS. These build files call all the other scripts in the repo. If you find something that doesn't make sense, feel free to ask about it [on Gitter](https://gitter.im/VSCodium/Lobby).
+- 提交信息请使用英文，保持简洁清晰
+- 代码风格遵循项目现有规范
+- 添加新功能时请同时更新文档
+- 确保补丁保持最小化，便于上游同步
 
-The builds are run every day, but exit early if there isn't a new release from Microsoft.
+---
 
-## <a id="supported-platforms"></a>Supported Platforms
+## 许可证
 
-The minimal version is limited by the core component Electron, you may want to check its [platform prerequisites](https://www.electronjs.org/docs/latest/development/build-instructions-gn#platform-prerequisites).
+本项目基于 MIT 许可证开源。
 
-- [x] macOS (`zip`, `dmg`) macOS 12 or newer x64
-- [x] macOS (`zip`, `dmg`) macOS 12 or newer arm64
-- [x] GNU/Linux x64 (`deb`, `rpm`, `AppImage`, `snap`, `tar.gz`)
-- [x] GNU/Linux arm64 (`deb`, `rpm`, `snap`, `tar.gz`)
-- [x] GNU/Linux armhf (`deb`, `rpm`, `tar.gz`)
-- [x] GNU/Linux riscv64 (`tar.gz`)
-- [x] GNU/Linux loong64 (`tar.gz`)
-- [x] GNU/Linux ppc64le (`tar.gz`)
-- [x] Windows 10 / Server 2012 R2 or newer x64
-- [x] Windows 10 / Server 2012 R2 or newer arm64
+- VSCodium 部分遵循 MIT 许可证
+- VS Code 部分遵循 MIT 许可证（Microsoft 的 VS Code）
+- 自定义扩展和脚本遵循 MIT 许可证
 
-## <a id="thanks"></a>Special thanks
+完整的许可证信息请参见 [LICENSE](LICENSE) 文件。
 
-<table>
-  <tr>
-    <td><a href="https://github.com/jaredreich" target="_blank">@jaredreich</a></td>
-    <td>for the logo</td>
-  </tr>
-  <tr>
-    <td><a href="https://github.com/PalinuroSec" target="_blank">@PalinuroSec</a></td>
-    <td>for CDN and domain name</td>
-  </tr>
-  <tr>
-    <td><a href="https://www.macstadium.com" target="_blank"><img src="https://images.prismic.io/macstadium/66fbce64-707e-41f3-b547-241908884716_MacStadium_Logo.png?w=128&q=75" width="128" height="49" alt="MacStadium logo" /></a></td>
-    <td>for providing a Mac mini M1</td>
-  </tr>
-  <tr>
-    <td><a href="https://github.com/daiyam" target="_blank">@daiyam</a></td>
-    <td>for macOS certificate</td>
-  </tr>
-  <tr>
-    <td><a href="https://signpath.org/" target="_blank"><img src="https://avatars.githubusercontent.com/u/34448643" height="30" alt="SignPath logo" /></a></td>
-    <td>free code signing on Windows provided by <a href="https://signpath.io/" target="_blank">SignPath.io</a>, certificate by <a href="https://signpath.org/" target="_blank">SignPath Foundation</a></td>
-  </tr>
-</table>
+---
 
-## <a id="license"></a>License
+## 致谢
 
-[MIT](https://github.com/VSCodium/vscodium/blob/master/LICENSE)
+- [VSCodium](https://github.com/VSCodium/vscodium) - 提供自由的 VS Code 构建
+- [Continue.dev](https://github.com/continuedev/continue) - 开源 AI 编程助手
+- [Microsoft VS Code](https://github.com/microsoft/vscode) - 优秀的代码编辑器
+- [Prism Launcher](https://github.com/PrismLauncher/PrismLauncher) - 开源 Minecraft 启动器
+- 所有 Minecraft 开发者和社区贡献者
+
+---
+
+<p align="center">
+  由 ❤️ 和 Minecraft 社区驱动<br>
+  Made with love for the Minecraft developer community
+</p>
