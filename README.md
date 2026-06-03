@@ -37,7 +37,7 @@
 
 **MCADE**（Minecraft AI Development Environment）是一款面向 Minecraft 社区开发者的 AI 集成开发环境。基于 VSCodium 深度定制，内置 AI 编程助手、Mod/插件开发工具链、服务器管理工具和本地测试启动器，致力于打造「开箱即用」的 Minecraft 开发体验。
 
-> **核心理念：** VSCodium 提供成熟的 IDE 底座，Continue.dev 提供 AI 能力，自研扩展集合提供 MC 开发工具链，开源启动器提供本地测试能力。
+> **核心理念：** VSCodium 提供成熟的 IDE 底座，自研 **Hermes** 提供 AI 能力，自研扩展集合提供 MC 开发工具链，开源启动器提供本地测试能力。
 
 ### 与竞品的差异
 
@@ -55,11 +55,12 @@
 
 ## 核心特性
 
-### AI 助手
-- 内置 [Continue.dev](https://github.com/continuedev/continue) 开源 AI 编程助手
-- 预配置 DeepSeek API / Ollama 本地模型
-- Minecraft 领域专用的 Chat 参与者（内置 Forge/Fabric/Paper API 知识）
-- 智能代码补全、解释、重构
+### AI 助手 — Hermes
+- **Hermes 自定义面板：** 比通用 ACP Client 更优的 UI 体验，专为 Minecraft 开发者设计的 AI 交互界面
+- **Skill 市场：** 用户之间分享/下载 AI Skills，实现"收集 → 审核 → 分发"的进化闭环
+- **云端 Skill 同步：** 用户 Skill 可同步至云端，审核后分发给更多开发者
+- **项目上下文感知：** 自动读取当前项目的结构、依赖和配置，提供精准的 AI 辅助
+- 支持对接 DeepSeek API / Ollama 本地模型等后端
 
 ### Mod/插件开发工具
 - **项目脚手架：** 一键创建 Forge / Fabric / NeoForge / Paper 项目
@@ -102,8 +103,8 @@
 │  │         VSCodium Core (Electron)             │ │
 │  │  ┌─────────┐ ┌─────────┐ ┌───────────────┐  │ │
 │  │  │ AI 助手  │ │ MC 开发  │ │ 服务器管理    │  │ │
-│  │  │(Continue │ │ 工具集   │ │ 面板          │  │ │
-│  │  │ + 定制)  │ │         │ │               │  │ │
+│  │  │ (Hermes) │ │ 工具集   │ │ 面板          │  │ │
+│  │  │          │ │         │ │               │  │ │
 │  │  └─────────┘ └─────────┘ └───────────────┘  │ │
 │  └──────────────────────────────────────────────┘ │
 │                       │                           │
@@ -129,7 +130,7 @@
 | 层级 | 技术 | 说明 |
 |------|------|------|
 | 基础框架 | VSCodium (Electron + TypeScript) | IDE 主体 |
-| AI 引擎 | Continue.dev (TypeScript) | AI 助手核心 |
+| AI 引擎 | Hermes（自研，TypeScript） | AI 助手核心，Skill 市场与云端同步 |
 | AI 模型 | DeepSeek / Ollama 本地模型 | 默认模型配置 |
 | 扩展开发 | TypeScript + VS Code Extension API | 自定义扩展 |
 | 构建工具 | Gradle / Maven 集成 | MC 项目构建 |
@@ -335,7 +336,7 @@ git diff --relative > ../patches/user/my-customization.patch
 | 任务 | 状态 | 说明 |
 |------|------|------|
 | 1.1 Fork VSCodium，品牌定制 | ✅ 已完成 | 修改品牌、图标、应用名 |
-| 1.2 预置 Continue 扩展 | ⏳ 待开始 | 内置 AI 助手 |
+| 1.2 开发 Hermes AI 扩展 | 🔄 进行中 | 自研 AI 助手，含 Skill 市场与云端同步 |
 | 1.3 MC 项目脚手架 | ⏳ 待开始 | 一键创建项目模板 |
 | 1.4 代码片段库 | ⏳ 待开始 | MC 开发 Snippets |
 | 1.5 Gradle 集成 | ⏳ 待开始 | 构建可视化 |
